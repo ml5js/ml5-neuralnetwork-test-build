@@ -26,8 +26,15 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "@tensorflow-models/mobilenet": "^2.1.0",
     "@tensorflow/tfjs": "^4.2.0",
     "@tensorflow/tfjs-vis": "^1.5.1",
     "axios": "^1.3.4"
+  },
+  "overrides": {
+    "@tensorflow-models/mobilenet": {
+      "@tensorflow/tfjs-converter": "^4.2.0",
+      "@tensorflow/tfjs-core": "^4.2.0"
+    }
   }
 }
