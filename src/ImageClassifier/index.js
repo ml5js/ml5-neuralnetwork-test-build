@@ -24,7 +24,6 @@ const DEFAULTS = {
     topk: 3,
   },
 };
-const IMAGE_SIZE = 224;
 const MODEL_OPTIONS = ["mobilenet", "darknet", "darknet-tiny", "doodlenet"];
 
 class ImageClassifier {
@@ -136,14 +135,10 @@ class ImageClassifier {
     await this.ready;
     await mediaReady(imgToPredict, true);
 
-    // Process the images
-    const imageResize = [IMAGE_SIZE, IMAGE_SIZE];
-
     if (this.modelUrl) {
       await tf.nextFrame();
       const predictedClasses = tf.tidy(() => {
-        const processedImg = imgToTensor(imgToPredict, imageResize);
-        const predictions = this.model.predict(processedImg);
+        const predictions = this.model.predict(imgToPredict);
         return Array.from(predictions.as1D().dataSync());
       });
 
@@ -162,12 +157,9 @@ class ImageClassifier {
       return results;
     }
 
-    const processedImg = imgToTensor(imgToPredict, imageResize);
     const results = this.model
-      .classify(processedImg, numberOfClasses)
+      .classify(imgToPredict, numberOfClasses)
       .then(classes => classes.map(c => ({ label: c.className, confidence: c.probability })));
-
-    processedImg.dispose();
 
     return results;
   }
