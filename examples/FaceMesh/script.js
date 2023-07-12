@@ -4,5 +4,5 @@ const input = {
   g: 0,
   b: 0,
 }
-const nmsl = fm(input)
-console.log('test result', nmsl)
+const faces = fm(input)
+console.log('test result', faces)
